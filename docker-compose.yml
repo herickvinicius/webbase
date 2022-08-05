@@ -1,0 +1,28 @@
+version: '3.7'
+
+#Docker services
+services:
+  backend:
+  build: ./backend
+  container_name: backend
+  restart: unless-stopped
+  ports:
+    - '127.0.0.1:1337:1773'
+  command: 'npm run dev'
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:3000:3000'
+    command: 'npm run dev'
+
+  proxy:
+    build: ./proxy
+    container_name: proxy
+    restart: unless-stopped
+    ports:
+      - '443:443'
+    depends_on:
+      - frontend
